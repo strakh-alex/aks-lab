@@ -13,6 +13,12 @@
         },
         "servicePrincipalClientSecret": {
             "value": "GEN-UNIQUE"
-        }
+        },
+        "keyVaultName": {
+            "value": "aks-lab-kv"
+        },
+        "objectId": {
+            "value": "GEN-AZUREAD-OBJECTID"
+         }
     }
 }

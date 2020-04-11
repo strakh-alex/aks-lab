@@ -1,3 +1,10 @@
+# 
+# AKS VMSS Cluster template: https://github.com/Azure/azure-quickstart-templates/tree/master/101-aks
+# KeyVault Template:  https://github.com/Azure/azure-quickstart-templates/tree/master/101-keyvault-add-access-policy
+# The example of Kubernetes application: https://kubernetes.io/docs/tutorials/stateful-application/mysql-wordpress-persistent-volume/
+#
+
+
 # Deploy the application:
 
 # 0. Set password in App/kustomization.yaml
