@@ -3,12 +3,13 @@ param(
     [string]$TemplateFileParametersPath = ".\parameters.json",
 
     [string]$ResouceGroup = "aks-lab",
-    [string]$Location = "southcentralus"
+    [string]$Location = "southcentralus",
+    [string]$ServicePrincipal = 'akslabsp'
 )
 
 #Login-AzAccount
 
-$SP = az ad sp create-for-rbac --name akslabsp
+$SP = az ad sp create-for-rbac --name $ServicePrincipal
 $SPparameters = $SP | ConvertFrom-Json
 #$AKSadminUsername = Read-Host("> Enter AKS Admin Username")
 #$AKSadminKeyPath = Read-Host("> Enter path to public key")
@@ -21,7 +22,7 @@ $Parameters.parameters.linuxAdminUsername.value = $AKSadminUsername
 $Parameters.parameters.sshRSAPublicKey.value = $AKSadminKey.ToString()
 $Parameters.parameters.servicePrincipalClientId.value = $SPparameters.appId
 $Parameters.parameters.servicePrincipalClientSecret.value = $SPparameters.password
-$Parameters.parameters.objectId.value = $SPparameters.objectId
+$Parameters.parameters.objectId.value = (Get-AzADServicePrincipal -DisplayName $ServicePrincipal).Id
 $Parameters | ConvertTo-Json | Set-Content $TemplateFileParametersPath -Encoding UTF8 -Force
 
 New-AzResourceGroup -Name $ResouceGroup -Location $Location

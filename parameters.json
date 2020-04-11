@@ -19,6 +19,12 @@
         },
         "objectId": {
             "value": "GEN-AZUREAD-OBJECTID"
-         }
+        },
+        "secretName": {
+            "value": "mysql-pass"
+        },
+        "secretValue": {
+            "value": "secretpassword"
+        }
     }
 }
