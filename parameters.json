@@ -1,0 +1,24 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"vmName": {
+			"value": "k8s-master"
+		},
+		"vmssName": {
+			"value": "k8s-workers"
+		},
+		"adminUsername": {
+			"value": ""
+		},
+		"adminKey": {
+			"value": ""
+		},
+		"spClientId": {
+			"value": "1d617e4d-03c0-41d9-8e3c-51f4bdaf1bc0"
+		},
+		"spClientSecret": {
+			"value": "17cff700-11d4-4a1c-a148-df0831e301a8"
+		}
+	}
+}

@@ -1,0 +1,54 @@
+Feature: Run a super simple webapp into a k8s cluster. The webapp stores the data collected from the web user through a web ui into a database that runs into the cluster as well. 
+The k8s has be configured during the interview from scratch: a managed k8s cluster fully provided by a cloud provider or by any other ThridParty is not an option. 
+The k8s has to be installed and configured starting from raw VMs based on standard linux distribution image (eg. Ubuntu 16.04).
+The VMs provider can be selected by the candidate among this options: main cloud providers offering trial accounts (eg. AWS, GCP, azure) or a free-of-charge virtualization solution (eg. VirtualBox). The cloud option is the preferred one. 
+The candidate should provide all the scripts required to satisfy the scenarios. It is perfectly fine uses scripts (eg. webapp code, infrastructure code, VM provisioning) retrieved from any public source (eg. website blog, github repo, ...) but the source has to be provided as reference otherwise we assume the candidate creates the script by himself meaning he or she is familiar with the creation of those scripts.
+All the scenarios have to be completed and commented out by the candidate during the interview using the provided scripts and manual steps, if needed, according to a checklist.
+The checklist and the referred scripts have to be provided 1 week prior to the scheduled interview in order to be executed by our devops team with no need of any additional support.
+Full checklist should be executed in a 30-minutes timeframe. 
+The following pre-conditions are not included in the 30-minute timeframe: 
+ -  Trial account creation for the selected cloud
+ -  Installation of the cloud CLI on the candidate laptop.
+ -  Time spent by the cloud provider to provisioning the VM after the script execution
+ -  Installation and configuration of the Virtualization solution including the download or the cloning of the raw VM image.
+If the candidate would like to negotiate some of the scenarios or need additional clarification, a dedicated quick call should be organzize to sort out any outstanding questions.
+
+    @cloud-only
+    Scenario: Provisioning the required machine to configure a multi-node (at least 2) k8s cluster.
+        Given a cloud-specific trial account
+        And the related CLI installed on your laptop
+        When I run a bash script(s)
+        Then I'm able to show the provisioned VMs through the could portal interface.
+    
+    Scenario: Install all the container-related required packages into raw VM.
+        Given a raw VM
+        When I run a bash script(s)
+        Then I'm able to show all the tools and services required to setup the k8s cluster onto the VMs already provisioned
+
+    Scenario: Configure the k8s cluster onto the VMs
+        Given the nodes up and running
+        And a connection established via ssh from your laptop to the node selected to become the master for the cluster
+        When I run a bash script(s)
+        Then I'm able able to show the status of that node within the created k8s cluster
+        When I join the additional node(s) to cluster
+        Then I'm able able to show the status of all the nodes belonging to the k8s cluster
+
+    Scenario: Deploy the webapp into the cluster
+        Given the source code of the app
+        And I built a docker image for that app
+        When I deploy the image containing the webapp into the cluster
+        Then I'm able to browse the app from my laptop simply using the webapp remote uri into my local web browser
+
+    Scenario: Webapp stores user input into a database running on the cluster
+        Given a webapp that provides a page with a simple form to collect user input
+        When I post some data through the form
+        Then the webpage shows the data read from a database that runs into the cluster
+
+    Scenario: Browse the data previously posted after removing all the k8s resources created during the deployment of the webapp and the database
+        Given the webapp showing the data previously posted
+        When I destroy all the pods containing the webapp and the database
+        And I recreate all the pods just destroyed
+        Then I'm able to browse the same data previously posted with no additional input through the web form
+
+
+

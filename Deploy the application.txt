@@ -1,0 +1,11 @@
+# Deploy the application
+
+# Manual steps:
+# 0. Set password in App/kustomization.yaml
+# 
+
+kubectl apply -k ~/App/.
+
+kubectl create -f ~/App/Persistent-Volumes-NFS.yaml
+kubectl create -f ~/App/mysql-deployment.yaml
+kubectl create -f ~/App/wordpress-deployment.yaml
