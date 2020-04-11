@@ -20,6 +20,9 @@
         "objectId": {
             "value": "GEN-AZUREAD-OBJECTID"
         },
+        "adminObjectId": {
+            "value": "OBJECT-ID-OF-THE-USER-WHO-MAKE-THE-DEPLOYMENT"
+        },
         "secretName": {
             "value": "mysql-pass"
         },
