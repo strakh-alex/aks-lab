@@ -12,14 +12,12 @@ param(
     [string]$Location = "southcentralus"
 )
 
-#Login-AzAccount
+Login-AzAccount
 
 $SP = az ad sp create-for-rbac --name akslabsp
 $SPparameters = $SP | ConvertFrom-Json
-#$AKSadminUsername = Read-Host("> Enter AKS Admin Username")
-#$AKSadminKeyPath = Read-Host("> Enter path to public key")
-$AKSadminUsername = 'voodoo'
-$AKSadminKeyPath = "C:\Users\VooDoo\.ssh\id_rsa.pub"
+$AKSadminUsername = Read-Host("> Enter AKS Admin Username")
+$AKSadminKeyPath = Read-Host("> Enter path to public key")
 $AKSadminKey = Get-Content $AKSadminKeyPath
 
 $Parameters = Get-Content $TemplateFileParametersPath -Raw | ConvertFrom-Json
@@ -34,4 +32,4 @@ New-AzResourceGroupDeployment -ResourceGroupName $ResouceGroup -TemplateFile $Te
 
 #az aks install-cli
 az aks get-credentials --resource-group $ResouceGroup --name "aks101cluster"
-#kubectl get nodes
+kubectl.exe get nodes

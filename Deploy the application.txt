@@ -1,5 +1,10 @@
 # Deploy the application:
 
 # 0. Set password in App/kustomization.yaml
-# 1. Run Deploy-AKS.ps1 script all enter paremeters
+# 1. Run Deploy-AKS.ps1 script all enter parameters
 # 2. Go to App directory and run kubectl apply -k ./
+
+
+# TODO:
+# 1. Add KeyVault and move the secret there
+# 2. Finish scripts and ARM templates to provision DNS Zone with alias to LoadBalancer's IP
