@@ -9,7 +9,11 @@ param(
     [string]$TemplateFileParametersPath = ".\parameters.json",
 
     [string]$ResouceGroup = "aks-lab",
-    [string]$Location = "southcentralus"
+    [string]$Location = "southcentralus",
+
+    [string]$StorageAccount = "akslabsastrakh",
+    [string]$StorageAccountSKU = "Standard_LRS",
+    [string]$ShareName = "aks-lab-ms"
 )
 
 Login-AzAccount
@@ -29,6 +33,14 @@ $Parameters | ConvertTo-Json | Set-Content $TemplateFileParametersPath -Encoding
 
 New-AzResourceGroup -Name $ResouceGroup -Location $Location
 New-AzResourceGroupDeployment -ResourceGroupName $ResouceGroup -TemplateFile $TemplateFilePath -TemplateParameterFile $TemplateFileParametersPath
+
+
+New-AzStorageAccount -ResourceGroupName $ResouceGroup -Name $StorageAccount -SkuName $StorageAccountSKU -Location $Location
+New-AzRmStorageShare -ResourceGroupName $ResouceGroup -StorageAccountName $StorageAccount -Name $ShareName
+$StorageKey = (Get-AzStorageAccountKey -ResourceGroupName $ResouceGroup -Name $StorageAccount)[0].Value
+
+kubectl create secret generic azure-fileshare-secret --from-literal=azurestorageaccountname=$StorageAccount --from-literal=azurestorageaccountkey=$StorageKey
+
 
 #az aks install-cli
 az aks get-credentials --resource-group $ResouceGroup --name "aks101cluster"

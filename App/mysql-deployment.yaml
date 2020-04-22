@@ -21,6 +21,7 @@ metadata:
 spec:
   accessModes:
     - ReadWriteOnce
+  storageClassName: ms
   resources:
     requests:
       storage: 1Gi
@@ -63,3 +64,32 @@ spec:
       - name: mysql-persistent-storage
         persistentVolumeClaim:
           claimName: mysql-pv-claim
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: ms
+provisioner: kubernetes.io/azure-disk
+parameters:
+  skuName: Standard_LRS
+  location: southcentralus
+  storageAccount: akslabsastrakh
+  reclaimPolicy: Retain
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: ms-pv
+  labels:
+    usage: ms-pv
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: ms
+  azureFile:
+    secretName: azure-fileshare-secret
+    shareName: aks-lab-ms
+    readOnly: false
