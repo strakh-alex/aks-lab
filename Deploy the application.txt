@@ -1,7 +1,7 @@
 # Deploy the application:
 
 # 0. Set password in App/kustomization.yaml
-# 1. Run Deploy-AKS.ps1 script all enter parameters
+# 1. Run Deploy-AKS.ps1 script, enter all parameters
 # 2. Go to App directory and run kubectl apply -k ./
 
 
